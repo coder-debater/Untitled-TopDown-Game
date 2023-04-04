@@ -1,5 +1,7 @@
 /* initData.js */
 
+
+
 // Constants
 
 const canvas = document.getElementById('game');
