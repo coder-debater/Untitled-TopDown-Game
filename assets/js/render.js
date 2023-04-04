@@ -2,6 +2,22 @@
 
 
 
+// Debug mode
+
+function log(...args) {
+    if (DEBUG) {
+        console.log(...args);
+    }
+}
+function s(x) {
+    // return s`Data`
+    if (DEBUG) {
+        return x.raw;
+    }
+}
+
+
+
 // Player
 
 // Position on land
@@ -61,7 +77,7 @@ const TILE_IMAGES = {
 // Render
 
 function _render() {
-    console.log("_render(): start");
+    log("_render(): start");
 
     let currentTiles = getPlayerLand().tiles;
     for (let y = 0; y < currentTiles.length; y++) {
@@ -80,8 +96,8 @@ function _render() {
         }
     }
 
-    console.log("_render(): finished");
-    return "Finished rendering";
+    log("_render(): finished");
+    return s`Finished rendering`;
 }
 
 // Same as _render() but with Promise()
@@ -128,18 +144,18 @@ if (stopTime > 0) {
 }
 function render() {
     if (rendering) {
-        return "Already starting rendering";
+        return s`Already starting rendering`;
     }
     rendering = true;
     window.requestAnimationFrame(renderCallback)
-    return "Starting rendering";
+    return s`Starting rendering`;
 }
 function unrender() {
     if (rendering) {
         rendering = false;
-        return "Stopping rendering"
+        return s`Stopping rendering`;
     }
-    return "Already stopped rendering";
+    return s`Already stopped rendering`;
 }
 
 /*
@@ -147,18 +163,18 @@ let interval = null;
 function render() {
         if (interval === null) {
             interval = setInterval(_render, 100);
-            return "Starting rendering";
+            return s`Starting rendering`;
         }
-        return "Already starting rendering";
+        return s`Already starting rendering`;
     }
 });
 function unrender() {
         if (interval === null) {
-            return "Already stopped rendering";
+            return s`Already stopped rendering`;
         }
         clearInterval(interval);
         interval = null;
-        return "Stopped rendering"
+        return s`Stopped rendering`;
     }
 });
 */
@@ -172,6 +188,6 @@ Object.defineProperty(window, 'stop' , { get: unrender });
 Object.defineProperty(window, 'reload', {
     get: () => {
         _asyncRender();
-        return "Now reloading";
+        return s`Now reloading`;
     }
 });

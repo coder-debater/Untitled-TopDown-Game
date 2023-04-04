@@ -10,3 +10,9 @@ const IMAGE_TYPE = 'PNG';
 //* Time until animation stops in milliseconds
 //* Affects render, unrender, start, stop
 const stopTime = 0;
+
+//* Debug mode
+//* Turns on console.log (may cause lag!)
+//* Turns on redundant function return values
+//* Turns on 'start', 'stop', 'reload'
+const DEBUG = false;
