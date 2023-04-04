@@ -46,7 +46,7 @@ function _img(name){
     return img;
 };
 
-const PLAYER_IMAGE = '/assets/images/svg/player.svg';
+const PLAYER_IMAGE = _img('player');
 const TILE_IMAGES = {
     ' ': _img('grass'),
     '-': _img('path'),
