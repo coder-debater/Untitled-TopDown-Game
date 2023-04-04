@@ -7,7 +7,8 @@
 //* Does not apply to player image
 const IMAGE_TYPE = 'PNG';
 
-//* Time until animation stops in milliseconds
+//* Time until rendering stops (in milliseconds)
+//* Values that are not positive will result in it not stopping
 //* Affects render, unrender, start, stop
 const stopTime = 0;
 
