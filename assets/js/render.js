@@ -79,6 +79,7 @@ function _render() {
             }
         }
     }
+
     console.log("_render(): finished");
     return "Finished rendering";
 }
