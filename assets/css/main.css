@@ -19,6 +19,6 @@ body, html {
     background-color: black;
 }
 
-div#images div#images > img {
+div#images, div#images > img {
     display: none;
 }
