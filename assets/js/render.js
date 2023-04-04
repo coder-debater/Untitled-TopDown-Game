@@ -66,7 +66,7 @@ const PLAYER_IMAGE = _img('player');
 const TILE_IMAGES = {
     ' ': _img('grass'),
     '-': _img('path'),
-    '#': _img('grass_side')
+    '#': _img('grassSide')
 };
 // TODO: real wall texture // TODO: real wall texture // TODO: real wall texture //
 // TODO: real wall texture // TODO: real wall texture // TODO: real wall texture //
