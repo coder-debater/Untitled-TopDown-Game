@@ -120,8 +120,8 @@ if (stopTime > 0) {
     };
 } else {
     renderCallback = function(timestamp) {
-        _render()
         if (rendering) {
+            _render()
             window.requestAnimationFrame(renderCallback);
         }
     };
