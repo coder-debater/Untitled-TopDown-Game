@@ -137,7 +137,7 @@ if (stopTime > 0) {
 } else {
     renderCallback = function(timestamp) {
         if (rendering) {
-            _render()
+            _render();
             window.requestAnimationFrame(renderCallback);
         }
     };
@@ -147,7 +147,7 @@ function render() {
         return s`Already starting rendering`;
     }
     rendering = true;
-    window.requestAnimationFrame(renderCallback)
+    window.requestAnimationFrame(renderCallback);
     return s`Starting rendering`;
 }
 function unrender() {
