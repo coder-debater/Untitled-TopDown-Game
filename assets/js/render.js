@@ -90,7 +90,7 @@ async function _asyncRender() {
 
 let renderCallback;
 let rendering = false;
-if (stoptime > 0) {
+if (stopTime > 0) {
     let start = null;
     let prevTimestamp = null;
     renderCallback = function(timestamp) {
