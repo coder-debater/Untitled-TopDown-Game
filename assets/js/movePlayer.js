@@ -21,7 +21,26 @@ function getPlayerLand() {
     }
 }
 
-function moveRelative(x, y) {
-    playerTilePos.x += x;
-    playerTilePos.y += y;
+function moveRelative(pos) {
+    playerTilePos.x += pos.x;
+    playerTilePos.y += pos.y;
 }
+
+/*
+document.body.addEventListener('keydown', function(evt) {
+    switch (event.key) {
+        case "ArrowLeft":
+            // Left pressed
+            break;
+        case "ArrowRight":
+            // Right pressed
+            break;
+        case "ArrowUp":
+            // Up pressed
+            break;
+        case "ArrowDown":
+            // Down pressed
+            break;
+    }
+});
+*/
