@@ -20,3 +20,8 @@ function getPlayerLand() {
         }
     }
 }
+
+function moveRelative(x, y) {
+    playerTilePos.x += x;
+    playerTilePos.y += y;
+}
