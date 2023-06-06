@@ -1,11 +1,9 @@
 /* config.js */
 
-
-
 //* Tile type
 //* 'PNG' or 'SVG'
 //* Does not apply to player image
-const IMAGE_TYPE = 'PNG';
+const IMAGE_TYPE = "PNG";
 
 //* Time until rendering stops (in milliseconds)
 //* Values that are not positive will result in it not stopping

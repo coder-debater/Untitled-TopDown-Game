@@ -1,29 +1,29 @@
 // Position on land
-let playerTilePos = {"x": 0, "y": 14};
+let playerTilePos = { x: 0, y: 14 };
 // Which land are we in?
-let playerLandPos = {"x": 0, "y": 0};
+let playerLandPos = { x: 0, y: 0 };
 
 // Check position to position equivalence
 function equivPos(a, b) {
-    return (a.x === b.x && a.y === b.y);
+  return a.x === b.x && a.y === b.y;
 }
 
 // Check position to X-Y equivalence
 function equivXY(a, x, y) {
-    return (a.x === x && a.y === y);
+  return a.x === x && a.y === y;
 }
 
 function getPlayerLand() {
-    for (let land of Object.values(map)) {
-        if (equivPos(land.landPos, playerLandPos)) {
-            return land;
-        }
+  for (let land of Object.values(map)) {
+    if (equivPos(land.landPos, playerLandPos)) {
+      return land;
     }
+  }
 }
 
 function moveRelative(pos) {
-    playerTilePos.x += pos.x;
-    playerTilePos.y += pos.y;
+  playerTilePos.x += pos.x;
+  playerTilePos.y += pos.y;
 }
 
 /*

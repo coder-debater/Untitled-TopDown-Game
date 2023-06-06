@@ -1,38 +1,35 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <title>Top-Down 2D Game</title>
+  </head>
+  <body>
+    <canvas id="game" width="1000" height="1000"
+      >Sorry, your browser does not support the canvas element.</canvas
+    >
 
+    <div id="images">
+      <!--* Player -->
+      <img id="playerPNG" src="./assets/images/svg/player.svg" />
+      <img id="playerSVG" src="./assets/images/svg/player.svg" />
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./assets/css/main.css">
-<title>Top-Down 2D Game</title></head><body>
+      <!--* SVG Tiles -->
+      <img id="grassSVG" src="./assets/images/svg/grass.svg" />
+      <img id="pathSVG" src="./assets/images/svg/path.svg" />
+      <img id="grassSideSVG" src="./assets/images/svg/grassSide.svg" />
 
+      <!--* PNG Tiles -->
+      <img id="grassPNG" src="./assets/images/png/grass.png" />
+      <img id="pathPNG" src="./assets/images/png/path.png" />
+      <img id="grassSidePNG" src="./assets/images/png/grassSide.png" />
+    </div>
 
-
-<canvas id="game" width="1000" height="1000">Sorry, your browser does not support the canvas element.</canvas>
-
-<div id="images">
-
-    <!--* Player -->
-    <img id="playerPNG" src="./assets/images/svg/player.svg">
-    <img id="playerSVG" src="./assets/images/svg/player.svg">
-
-    <!--* SVG Tiles -->
-    <img id="grassSVG" src="./assets/images/svg/grass.svg">
-    <img id="pathSVG" src="./assets/images/svg/path.svg">
-    <img id="grassSideSVG" src="./assets/images/svg/grassSide.svg">
-
-    <!--* PNG Tiles -->
-    <img id="grassPNG" src="./assets/images/png/grass.png">
-    <img id="pathPNG" src="./assets/images/png/path.png">
-    <img id="grassSidePNG" src="./assets/images/png/grassSide.png">
-
-</div>
-
-
-<script src="./assets/js/initData.js"></script>
-<script src="./assets/js/config.js"></script>
-<script src="./assets/js/movePlayer.js"></script>
-<script src="./assets/js/render.js"></script>
-
-
-  </body></html>
+    <script src="./assets/js/initData.js"></script>
+    <script src="./assets/js/config.js"></script>
+    <script src="./assets/js/movePlayer.js"></script>
+    <script src="./assets/js/render.js"></script>
+  </body>
+</html>
