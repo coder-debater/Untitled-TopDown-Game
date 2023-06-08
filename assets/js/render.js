@@ -1,25 +1,14 @@
-/* render.js */
-
-// Debug mode
-
-function log(...args) {
-  if (DEBUG) {
-    console.log(...args);
-  }
-}
-function s(x) {
-  // return s`Data`
-  if (DEBUG) {
-    return x.raw;
-  }
-}
+import { IMAGE_TYPE, stopTime, DEBUG } from "./config.js";
+import { canvas, c } from "./initData.js";
+import { log, s, registerRenderers } from "./debug.js";
+import { getLand, player } from "./movePlayer.js";
+log("render.js start");
 
 // Tiles
 
 // Size of one tile
 const TILE_SIZE = Math.min(canvas.width, canvas.height) / 28;
-
-// 'grass' => <img id='grass' width=TILE_SIZE etc />
+// get image and set correct dimensions
 function _img(name) {
   // Get image
   const img = document.querySelector("#" + name + IMAGE_TYPE);
@@ -30,45 +19,45 @@ function _img(name) {
 
   return img;
 }
-
 const PLAYER_IMAGE = _img("player");
 const TILE_IMAGES = {
   " ": _img("grass"),
   "-": _img("path"),
-  "#": _img("grassSide"),
+  G: _img("grassSide"),
+  C: _img("cobblestone"),
+  S: _img("stone"),
+  B: _img("stoneBricks"),
 };
-// TODO: real wall texture // TODO: real wall texture // TODO: real wall texture //
-// TODO: real wall texture // TODO: real wall texture // TODO: real wall texture //
-// TODO: real wall texture // TODO: real wall texture // TODO: real wall texture //
 
 // Render
 
 function _render() {
-  log("_render(): start");
-
-  let currentTiles = getPlayerLand().tiles;
+  let currentTiles = getLand(player.land.truePos).tiles;
   for (let y = 0; y < currentTiles.length; y++) {
     let row = currentTiles[y];
     for (let x = 0; x < row.length; x++) {
       const tilePosition = [x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE];
       let tileTextContent = row[x];
       c.clearRect(...tilePosition);
-      c.drawImage(TILE_IMAGES[tileTextContent], ...tilePosition);
-      if (equivXY(playerTilePos, x, y)) {
-        c.drawImage(PLAYER_IMAGE, ...tilePosition);
+      const tileImg = TILE_IMAGES[tileTextContent];
+      if (tileImg) {
+        c.drawImage(tileImg, ...tilePosition);
       }
     }
+    c.drawImage(
+      PLAYER_IMAGE,
+      player.tile.x * TILE_SIZE,
+      player.tile.y * TILE_SIZE,
+      TILE_SIZE,
+      TILE_SIZE
+    );
   }
-
-  log("_render(): finished");
   return s`Finished rendering`;
 }
-
-// Same as _render() but with Promise()
+// Same as _render() but asynchronous
 async function _asyncRender() {
   return _render();
 }
-
 let renderCallback;
 let rendering = false;
 if (stopTime > 0) {
@@ -78,12 +67,10 @@ if (stopTime > 0) {
     if (start === null) {
       start = timestamp;
     }
-
     // Stop animation after stopTime seconds
     if (timestamp - start >= stopTime) {
       rendering = false;
     }
-
     if (rendering) {
       // Only render if time has passed
       if (prevTimestamp !== timestamp) {
@@ -99,7 +86,7 @@ if (stopTime > 0) {
     }
   };
 } else {
-  renderCallback = function (timestamp) {
+  renderCallback = function () {
     if (rendering) {
       _render();
       window.requestAnimationFrame(renderCallback);
@@ -121,7 +108,6 @@ function unrender() {
   }
   return s`Already stopped rendering`;
 }
-
 /*
 let interval = null;
 function render() {
@@ -142,14 +128,9 @@ function unrender() {
     }
 });
 */
+if (DEBUG) {
+  registerRenderers(render, unrender, _asyncRender);
+  start;
+}
 
-// Debugging helpers
-
-Object.defineProperty(window, "start", { get: render });
-Object.defineProperty(window, "stop", { get: unrender });
-Object.defineProperty(window, "reload", {
-  get: () => {
-    _asyncRender();
-    return s`Now reloading`;
-  },
-});
+log("render.js end");

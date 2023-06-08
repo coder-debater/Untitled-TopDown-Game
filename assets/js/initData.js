@@ -1,4 +1,5 @@
-/* initData.js */
+import { log } from "./debug.js";
+log("initData.js start");
 
 // Constants
 
@@ -21,40 +22,42 @@ let map = {
 // Tiles
 
 function _toTiles(s) {
-  return s.slice(1, -1).replaceAll(".", "").split("\n");
+  const rowList = s.slice(1, -1).replaceAll(".", "").split("\n");
+  console.log(rowList);
+  return rowList;
 }
-
+// TODO stop hardcoding tile as ASCII and make a level editor
+// * then use level editor to store base tiles of level
 map.ragni.tiles = _toTiles(`
-                            .
-                            .
-                            .
-                            .
-                            .
-                           #.
-                           #.
-                           #.
-                          ##.
-                          # .
-                          ##.
-                           #.
-                          ##.
-----------------------------..
-----------------------------..
-                          ##.
-                           #.
-                          ##.
-                          # .
-                          ##.
-                           #.
-                           #.
-                           #.
-                            .
-                            .
-                            .
-                            .
-                            .
+CCCCCCCCCCCCCCCCCCCCCCCCCC??.
+BSBBBSBBBSBBBSBBBSBBBSBBBSC?.
+BB   B   B   B   B   B  BBSC.
+                         BBC.
+  ---------------------   BC.
+  ---------------------    C.
+      --??                 C.
+      --??                 C.
+      --     ?????        BC.
+  ????--???? ?????        B .
+  ????--???? ????? ?????? BC.
+  ????--???? ????? ??????  C.
+  ????--???? ????? ?????? BC.
+----------------------------.
+----------------------------.
+  ????--?????? ????  ???? BC.
+  ????--?????? ????  ????  C.
+  ????--?????? ????       BC.
+  ????--??????            B .
+  ????--                  BC.
+  ????--                   C.
+      --                   C.
+  ---------------------    C.
+  ---------------------   BC.
+                         BBC.
+BB   B   B   B   B   B  BBSC.
+BSBBBSBBBSBBBSBBBSBBBSBBBSC?.
+CCCCCCCCCCCCCCCCCCCCCCCCCC??.
 `);
-
 map.trail.tiles = _toTiles(`
                             .
                             .
@@ -69,8 +72,8 @@ map.trail.tiles = _toTiles(`
                             .
                             .
                             .
-----------------------------..
-----------------------------..
+----------------------------.
+----------------------------.
                             .
                             .
                             .
@@ -85,3 +88,6 @@ map.trail.tiles = _toTiles(`
                             .
                             .
 `);
+
+log("initData.js end");
+export { canvas, c, map };

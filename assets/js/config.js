@@ -1,4 +1,6 @@
-/* config.js */
+/*
+? Configuration
+*/
 
 //* Tile type
 //* 'PNG' or 'SVG'
@@ -14,4 +16,6 @@ const stopTime = 0;
 //* Turns on console.log (may cause lag!)
 //* Turns on redundant function return values
 //* Turns on 'start', 'stop', 'reload'
-const DEBUG = false;
+const DEBUG = true;
+
+export { IMAGE_TYPE, stopTime, DEBUG };
