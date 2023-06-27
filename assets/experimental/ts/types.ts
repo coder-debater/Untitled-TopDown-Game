@@ -2,4 +2,8 @@ type Arrows = "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight";
 type TilePos = { x: number; y: number };
 type LandPos = { x: number; y: number };
 type Pos = TilePos | LandPos;
-export { Arrows, TilePos, LandPos, Pos };
+type TileData = { name: string; landPos: LandPos; tiles?: string[] };
+type MapType = {
+  [key: string]: TileData;
+};
+export { Arrows, TilePos, LandPos, Pos, TileData, MapType };

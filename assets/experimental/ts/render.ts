@@ -9,9 +9,11 @@ log("render.js start");
 // Size of one tile
 const TILE_SIZE = Math.min(canvas.width, canvas.height) / 28;
 // get image and set correct dimensions
-function _img(name) {
+function _img(name: string): HTMLImageElement {
   // Get image
-  const img = document.querySelector("#" + name + IMAGE_TYPE);
+  const img: HTMLImageElement = document.querySelector(
+    "#" + name + IMAGE_TYPE
+  ) as HTMLImageElement;
 
   // Set dimensions
   img.width = TILE_SIZE;
@@ -19,8 +21,10 @@ function _img(name) {
 
   return img;
 }
-const PLAYER_IMAGE = _img("player");
-const TILE_IMAGES = {
+const PLAYER_IMAGE: HTMLImageElement = _img("player");
+const TILE_IMAGES: {
+  [key: string]: HTMLImageElement;
+} = {
   " ": _img("grass"),
   "-": _img("path"),
   G: _img("grassSide"),

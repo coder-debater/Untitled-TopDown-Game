@@ -1,7 +1,7 @@
 import { DEBUG } from "./config.js";
 import { log } from "./debug.js";
 import { map } from "./initData.js";
-import { Arrows, TilePos, LandPos, Pos } from "./types.js";
+import { Arrows, TilePos, LandPos, Pos, TileData } from "./types.js";
 log("movePlayer.js start");
 
 // Player
@@ -98,12 +98,13 @@ const player = {
   },
 };
 // More data on our current land
-function getLand(landPos: LandPos) {
+function getLand(landPos: LandPos): TileData {
   for (let land of Object.values(map)) {
     if (equivPos(land.landPos, landPos)) {
       return land;
     }
   }
+  throw Error();
 }
 // Access player debug mode
 if (DEBUG) {

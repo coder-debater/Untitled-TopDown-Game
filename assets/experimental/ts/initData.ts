@@ -1,17 +1,19 @@
 import { log } from "./debug.js";
-import { LandPos } from "./types.js";
+import { MapType } from "./types.js";
 log("initData.js start");
 
 // Constants
 
-const canvas: HTMLCanvasElement = document.querySelector("canvas#game");
-const c = canvas.getContext("2d");
+const canvas: HTMLCanvasElement = document.querySelector(
+  "canvas#game"
+) as HTMLCanvasElement;
+const c: CanvasRenderingContext2D = canvas.getContext(
+  "2d"
+) as CanvasRenderingContext2D;
 
 // Map
 
-let map: {
-  [key: string]: { name: string; landPos: LandPos; tiles?: string[] };
-} = {
+let map: MapType = {
   ragni: {
     name: "Ragni",
     landPos: { x: 0, y: 0 },
@@ -24,8 +26,8 @@ let map: {
 
 // Tiles
 
-function _toTiles(s) {
-  const rowList = s.slice(1, -1).replaceAll(".", "").split("\n");
+function _toTiles(s: string) {
+  const rowList = s.slice(1, -1).replace(/\./g, "").split("\n");
   console.log(rowList);
   return rowList;
 }
