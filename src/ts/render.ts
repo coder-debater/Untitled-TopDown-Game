@@ -40,7 +40,12 @@ function _render() {
   for (let y = 0; y < currentTiles.length; y++) {
     let row = currentTiles[y];
     for (let x = 0; x < row.length; x++) {
-      const tilePosition = [x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE];
+      const tilePosition: [number, number, number, number] = [
+        x * TILE_SIZE,
+        y * TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE,
+      ];
       let tileTextContent = row[x];
       c.clearRect(...tilePosition);
       const tileImg = TILE_IMAGES[tileTextContent];
@@ -62,26 +67,27 @@ function _render() {
 async function _asyncRender() {
   return _render();
 }
-let renderCallback;
+// Note that _timestamp starts with _ to avoid warnings
+let renderCallback: (_timestamp: number) => void;
 let rendering = false;
 if (stopTime > 0) {
-  let start = null;
-  let prevTimestamp = null;
-  renderCallback = function (timestamp) {
+  let start: number | null = null;
+  let prevTimestamp: number | null = null;
+  renderCallback = function (_timestamp: number) {
     if (start === null) {
-      start = timestamp;
+      start = _timestamp;
     }
     // Stop animation after stopTime seconds
-    if (timestamp - start >= stopTime) {
+    if (_timestamp - start >= stopTime) {
       rendering = false;
     }
     if (rendering) {
       // Only render if time has passed
-      if (prevTimestamp !== timestamp) {
+      if (prevTimestamp !== _timestamp) {
         _render();
       }
       // Update for next call
-      prevTimestamp = timestamp;
+      prevTimestamp = _timestamp;
       window.requestAnimationFrame(renderCallback);
     } else {
       // Reset variables
@@ -90,7 +96,7 @@ if (stopTime > 0) {
     }
   };
 } else {
-  renderCallback = function () {
+  renderCallback = function (_timestamp: number) {
     if (rendering) {
       _render();
       window.requestAnimationFrame(renderCallback);
@@ -134,7 +140,8 @@ function unrender() {
 */
 if (DEBUG) {
   registerRenderers(render, unrender, _asyncRender);
-  start;
+  (window as any).start; // defined in debug.ts registerRenderers()
+  // use "as any" to silence errors
 }
 
 log("render.js end");

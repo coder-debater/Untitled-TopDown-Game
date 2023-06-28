@@ -167,11 +167,11 @@ async function moved(key: Arrows) {
   }, moveInterval);
 }
 document.body.addEventListener("keydown", function (evt) {
-  const key = evt.key;
+  const key = evt.key as Arrows;
   if (Object.keys(canMove).includes(key)) {
     keyIsDown[key] = true;
     if (canMove[key]) {
-      moved(key as Arrows);
+      moved(key);
       evt.preventDefault();
       shift[key];
     }

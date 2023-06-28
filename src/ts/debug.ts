@@ -3,12 +3,12 @@ log("debug.js start");
 
 // Debug mode
 
-function log(...args) {
+function log(...args: any[]) {
   if (DEBUG) {
     console.log(...args);
   }
 }
-function s(x) {
+function s(x: TemplateStringsArray): string | undefined {
   // return s`Data`
   if (DEBUG) {
     return x.raw[0];
@@ -17,7 +17,13 @@ function s(x) {
 
 // Debugging helpers
 
-function registerRenderers(render, unrender, _asyncRender) {
+type _DebugFunction = () => string | undefined;
+type _AsyncDebugFunction = () => Promise<string | undefined>;
+function registerRenderers(
+  render: _DebugFunction,
+  unrender: _DebugFunction,
+  _asyncRender: _AsyncDebugFunction
+) {
   Object.defineProperty(window, "start", { get: render });
   Object.defineProperty(window, "stop", { get: unrender });
   Object.defineProperty(window, "reload", {
