@@ -134,30 +134,6 @@ let canMove = {
   ArrowUp: true,
   ArrowDown: true,
 };
-let keyIsDown = {
-  ArrowLeft: false,
-  ArrowRight: false,
-  ArrowUp: false,
-  ArrowDown: false,
-};
-let shift = {
-  get ArrowRight() {
-    player.tile.shiftX(1);
-    return "";
-  },
-  get ArrowLeft() {
-    player.tile.shiftX(-1);
-    return "";
-  },
-  get ArrowDown() {
-    player.tile.shiftY(1);
-    return "";
-  },
-  get ArrowUp() {
-    player.tile.shiftY(-1);
-    return "";
-  },
-};
 const baseMoveInterval = 30;
 async function moved(key: Arrows) {
   canMove[key] = false;
@@ -167,15 +143,25 @@ async function moved(key: Arrows) {
   }, moveInterval);
 }
 document.body.addEventListener("keydown", function (evt) {
-  const key = evt.key as Arrows;
-  if (Object.keys(canMove).includes(key)) {
-    keyIsDown[key] = true;
-    if (canMove[key]) {
-      moved(key);
-      evt.preventDefault();
-      shift[key];
-    }
+  const key = evt.key;
+  switch (key) {
+    case "ArrowRight":
+      player.tile.shiftX(1);
+      break;
+    case "ArrowLeft":
+      player.tile.shiftX(-1);
+      break;
+    case "ArrowDown":
+      player.tile.shiftY(1);
+      break;
+    case "ArrowUp":
+      player.tile.shiftY(-1);
+      break;
+    default:
+      return;
   }
+  evt.preventDefault();
+  moved(key);
 });
 // document.body.addEventListener("keyup", function (evt) {
 //   // something
