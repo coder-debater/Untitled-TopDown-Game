@@ -7,13 +7,18 @@ log("render.js start");
 // Tiles
 
 // Size of one tile
-const TILE_SIZE = Math.min(canvas.width, canvas.height) / 28;
+const TILE_SIZE: number = Math.min(canvas.width, canvas.height) / 28;
 // get image and set correct dimensions
 function _img(name: string): HTMLImageElement {
   // Get image
-  const img: HTMLImageElement = document.querySelector(
+  const imgMaybe: HTMLImageElement | null = document.querySelector(
     "#" + name + IMAGE_TYPE
-  ) as HTMLImageElement;
+  );
+  // Ensure it exists
+  if (!imgMaybe) {
+    throw new Error(`Image ${name} not found`);
+  }
+  const img: HTMLImageElement = imgMaybe as HTMLImageElement;
 
   // Set dimensions
   img.width = TILE_SIZE;
@@ -32,25 +37,25 @@ const TILE_IMAGES: {
   S: _img("stone"),
   B: _img("stoneBricks"),
 };
+const TILE_TYPES: string[] = Object.keys(TILE_IMAGES);
 
 // Render
 
-function _render() {
-  let currentTiles = getLand(player.land.truePos).tiles;
-  for (let y = 0; y < currentTiles.length; y++) {
-    let row = currentTiles[y];
-    for (let x = 0; x < row.length; x++) {
+function _render(): string | undefined {
+  let currentTiles: string[] = getLand(player.land.truePos).tiles;
+  for (let y: number = 0; y < currentTiles.length; y++) {
+    let row: string = currentTiles[y];
+    for (let x: number = 0; x < row.length; x++) {
       const tilePosition: [number, number, number, number] = [
         x * TILE_SIZE,
         y * TILE_SIZE,
         TILE_SIZE,
         TILE_SIZE,
       ];
-      let tileTextContent = row[x];
+      let tileTextContent: string = row[x];
       c.clearRect(...tilePosition);
-      const tileImg = TILE_IMAGES[tileTextContent];
-      if (tileImg) {
-        c.drawImage(tileImg, ...tilePosition);
+      if (TILE_TYPES.includes(tileTextContent)) {
+        c.drawImage(TILE_IMAGES[tileTextContent], ...tilePosition);
       }
     }
     c.drawImage(
@@ -64,12 +69,12 @@ function _render() {
   return s`Finished rendering`;
 }
 // Same as _render() but asynchronous
-async function _asyncRender() {
+async function _asyncRender(): Promise<string | undefined> {
   return _render();
 }
 // Note that _timestamp starts with _ to avoid warnings
 let renderCallback: (_timestamp: number) => void;
-let rendering = false;
+let rendering: boolean = false;
 if (stopTime > 0) {
   let start: number | null = null;
   let prevTimestamp: number | null = null;
@@ -103,7 +108,7 @@ if (stopTime > 0) {
     }
   };
 }
-function render() {
+function render(): string | undefined {
   if (rendering) {
     return s`Already starting rendering`;
   }
@@ -111,7 +116,7 @@ function render() {
   window.requestAnimationFrame(renderCallback);
   return s`Starting rendering`;
 }
-function unrender() {
+function unrender(): string | undefined {
   if (rendering) {
     rendering = false;
     return s`Stopping rendering`;
