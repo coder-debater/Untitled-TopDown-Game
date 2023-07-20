@@ -10,10 +10,8 @@ const c: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
 // Map
 
-function _toTiles(s: string) {
-  const rowList = s.slice(1, -1).replace(/\./g, "").split("\n");
-  console.log(rowList);
-  return rowList;
+function _toTiles(s: string): string[] {
+  return s.slice(1, -1).replace(/\./g, "").split("\n");
 }
 // TODO stop hardcoding tile as ASCII and make a level editor
 // * then use level editor to store base tiles of level
