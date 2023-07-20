@@ -145,5 +145,3 @@ if (DEBUG) {
 }
 
 log("render.js end");
-
-export default render;
