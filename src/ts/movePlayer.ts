@@ -137,10 +137,9 @@ let canMove = {
 const baseMoveInterval = 30;
 async function moved(key: Arrows) {
   canMove[key] = false;
-  let moveInterval = baseMoveInterval;
   setTimeout(function () {
     canMove[key] = true;
-  }, moveInterval);
+  }, baseMoveInterval);
 }
 document.body.addEventListener("keydown", function (evt) {
   const key = evt.key;
