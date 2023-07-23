@@ -2,6 +2,7 @@ import { IMAGE_TYPE, stopTime, DEBUG } from "./config.js";
 import { canvas, c } from "./initData.js";
 import { log, s, registerRenderers } from "./debug.js";
 import { getLand, player } from "./movePlayer.js";
+import { ImagePos } from "./types.js";
 log("render.js start");
 
 // Tiles
@@ -41,11 +42,7 @@ const tile_images: {
   B: img("stoneBricks"),
 };
 const TILE_TYPES: string[] = Object.keys(tile_images);
-function toTilePos(
-  startX: number,
-  startY: number,
-  size: number
-): [number, number, number, number] {
+function toTilePos(startX: number, startY: number, size: number): ImagePos {
   return [startX * size, startY * size, size, size];
 }
 
@@ -60,11 +57,7 @@ function _render(): string | undefined {
   for (let y: number = 0; y < currentTiles.length; y++) {
     let row: string = currentTiles[y];
     for (let x: number = 0; x < row.length; x++) {
-      const tilePosition: [number, number, number, number] = toTilePos(
-        x,
-        y,
-        size
-      );
+      const tilePosition: ImagePos = toTilePos(x, y, size);
       let tileTextContent: string = row[x];
       c.clearRect(...tilePosition);
       if (TILE_TYPES.includes(tileTextContent)) {

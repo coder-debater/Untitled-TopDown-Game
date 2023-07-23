@@ -17,4 +17,14 @@ type PlayerPos<PosType> = {
   shiftX: (dx: number) => void;
   shiftY: (dy: number) => void;
 };
-export type { Arrows, TilePos, LandPos, Pos, TileData, MapType, PlayerPos };
+type ImagePos = [number, number, number, number];
+export type {
+  Arrows,
+  TilePos,
+  LandPos,
+  Pos,
+  TileData,
+  MapType,
+  PlayerPos,
+  ImagePos,
+};
