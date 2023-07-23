@@ -150,6 +150,7 @@ if (DEBUG) {
   registerRenderers(render, unrender, _asyncRender);
   (window as any).start; // defined in debug.ts registerRenderers()
   // use "as any" to silence errors
+  // TODO: silence errors properly
 }
 
 log("render.js end");
