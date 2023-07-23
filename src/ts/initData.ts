@@ -4,9 +4,12 @@ log("initData.js start");
 
 // Constants
 
-const canvas: HTMLCanvasElement =
-  document.querySelector<HTMLCanvasElement>("canvas#game")!;
-const c: CanvasRenderingContext2D = canvas.getContext("2d")!;
+const canvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>(
+  "canvas#game"
+) as HTMLCanvasElement;
+const c: CanvasRenderingContext2D = canvas.getContext(
+  "2d"
+) as CanvasRenderingContext2D;
 
 // Map
 

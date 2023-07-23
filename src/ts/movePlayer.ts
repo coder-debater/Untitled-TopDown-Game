@@ -1,7 +1,7 @@
 import { DEBUG } from "./config.js";
 import { log } from "./debug.js";
 import { map } from "./initData.js";
-import { Arrows, TilePos, LandPos, Pos, TileData } from "./types.js";
+import { Arrows, TilePos, LandPos, Pos, TileData, PlayerPos } from "./types.js";
 log("movePlayer.js start");
 
 // Player
@@ -10,8 +10,11 @@ log("movePlayer.js start");
 let playerTilePos: TilePos = { x: 0, y: 14 };
 // Which land are we in?
 let playerLandPos: LandPos = { x: 0, y: 0 };
-// Player data interfacce
-const player = {
+// Player data interface
+const player: {
+  tile: PlayerPos<TilePos>;
+  land: PlayerPos<LandPos>;
+} = {
   tile: {
     get x() {
       return playerTilePos.x;
@@ -44,7 +47,7 @@ const player = {
         },
       };
     },
-    set pos(newPos) {
+    set pos(newPos: TilePos) {
       playerTilePos = newPos;
     },
     shiftX: function (dx: number) {
@@ -86,7 +89,7 @@ const player = {
         },
       };
     },
-    set pos(newPos) {
+    set pos(newPos: LandPos) {
       playerLandPos = newPos;
     },
     shiftX: function (dx: number) {
@@ -104,7 +107,7 @@ function getLand(landPos: LandPos): TileData {
       return land;
     }
   }
-  throw Error();
+  throw Error("Player on nonexistent land x=" + landPos.x + " y=" + landPos.y);
 }
 // Access player debug mode
 if (DEBUG) {
@@ -118,23 +121,28 @@ if (DEBUG) {
 // Position helpers
 
 // Check position to position equivalence
-function equivPos(a: Pos, b: Pos) {
+function equivPos(a: Pos, b: Pos): boolean {
   return a.x === b.x && a.y === b.y;
 }
 // Check position to X-Y equivalence
-function equivXY(a: Pos, x: number, y: number) {
+function equivXY(a: Pos, x: number, y: number): boolean {
   return a.x === x && a.y === y;
 }
 
 // Player movement
 
-let canMove = {
+let canMove: {
+  ArrowLeft: boolean;
+  ArrowRight: boolean;
+  ArrowUp: boolean;
+  ArrowDown: boolean;
+} = {
   ArrowLeft: true,
   ArrowRight: true,
   ArrowUp: true,
   ArrowDown: true,
 };
-const baseMoveInterval = 30;
+const baseMoveInterval: number = 30;
 async function moved(key: Arrows) {
   canMove[key] = false;
   setTimeout(function () {

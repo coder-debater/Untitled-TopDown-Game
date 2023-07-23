@@ -6,64 +6,74 @@ log("render.js start");
 
 // Tiles
 
+const CANVAS_MIN_DIM: number = Math.min(canvas.width, canvas.height);
 // Size of one tile
-const TILE_SIZE: number = Math.min(canvas.width, canvas.height) / 28;
-// get image and set correct dimensions
-function _img(name: string): HTMLImageElement {
-  // Get image
-  const imgMaybe: HTMLImageElement | null = document.querySelector(
-    "#" + name + IMAGE_TYPE
-  );
-  // Ensure it exists
-  if (!imgMaybe) {
-    throw new Error(`Image ${name} not found`);
-  }
-  const img: HTMLImageElement = imgMaybe as HTMLImageElement;
+const getTileSize: (maxTileDim: number) => number = (maxTileDim: number) =>
+  CANVAS_MIN_DIM / maxTileDim;
+function img(name: string): (size: number) => HTMLImageElement {
+  return function (size: number): HTMLImageElement {
+    // Get image
+    const imgMaybe: HTMLImageElement | null = document.querySelector(
+      "#" + name + IMAGE_TYPE
+    );
+    // Ensure it exists
+    if (!imgMaybe) {
+      throw new Error(`Image ${name} not found`);
+    }
+    const img: HTMLImageElement = imgMaybe as HTMLImageElement;
 
-  // Set dimensions
-  img.width = TILE_SIZE;
-  img.height = TILE_SIZE;
+    // Set dimensions
+    img.width = size;
+    img.height = size;
 
-  return img;
+    return img;
+  };
 }
-const PLAYER_IMAGE: HTMLImageElement = _img("player");
-const TILE_IMAGES: {
-  [key: string]: HTMLImageElement;
+const player_image: (size: number) => HTMLImageElement = img("player");
+const tile_images: {
+  [key: string]: (size: number) => HTMLImageElement;
 } = {
-  " ": _img("grass"),
-  "-": _img("path"),
-  G: _img("grassSide"),
-  C: _img("cobblestone"),
-  S: _img("stone"),
-  B: _img("stoneBricks"),
+  " ": img("grass"),
+  "-": img("path"),
+  G: img("grassSide"),
+  C: img("cobblestone"),
+  S: img("stone"),
+  B: img("stoneBricks"),
 };
-const TILE_TYPES: string[] = Object.keys(TILE_IMAGES);
+const TILE_TYPES: string[] = Object.keys(tile_images);
+function toTilePos(
+  startX: number,
+  startY: number,
+  size: number
+): [number, number, number, number] {
+  return [startX * size, startY * size, size, size];
+}
 
 // Render
 
 function _render(): string | undefined {
   let currentTiles: string[] = getLand(player.land.truePos).tiles;
+  // Get tiles height
+  const size = getTileSize(
+    Math.max(currentTiles.length, ...currentTiles.map((row) => row.length))
+  );
   for (let y: number = 0; y < currentTiles.length; y++) {
     let row: string = currentTiles[y];
     for (let x: number = 0; x < row.length; x++) {
-      const tilePosition: [number, number, number, number] = [
-        x * TILE_SIZE,
-        y * TILE_SIZE,
-        TILE_SIZE,
-        TILE_SIZE,
-      ];
+      const tilePosition: [number, number, number, number] = toTilePos(
+        x,
+        y,
+        size
+      );
       let tileTextContent: string = row[x];
       c.clearRect(...tilePosition);
       if (TILE_TYPES.includes(tileTextContent)) {
-        c.drawImage(TILE_IMAGES[tileTextContent], ...tilePosition);
+        c.drawImage(tile_images[tileTextContent](size), ...tilePosition);
       }
     }
     c.drawImage(
-      PLAYER_IMAGE,
-      player.tile.x * TILE_SIZE,
-      player.tile.y * TILE_SIZE,
-      TILE_SIZE,
-      TILE_SIZE
+      player_image(size),
+      ...toTilePos(player.tile.x, player.tile.y, size)
     );
   }
   return s`Finished rendering`;

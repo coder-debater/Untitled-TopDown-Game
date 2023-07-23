@@ -6,4 +6,15 @@ type TileData = { name: string; landPos: LandPos; tiles: string[] };
 type MapType = {
   [key: string]: TileData;
 };
-export type { Arrows, TilePos, LandPos, Pos, TileData, MapType };
+type PlayerPos<PosType> = {
+  x: number;
+  y: number;
+  readonly truePos: PosType;
+  pos: {
+    x: number;
+    y: number;
+  };
+  shiftX: (dx: number) => void;
+  shiftY: (dy: number) => void;
+};
+export type { Arrows, TilePos, LandPos, Pos, TileData, MapType, PlayerPos };

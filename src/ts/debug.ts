@@ -3,7 +3,7 @@ log("debug.js start");
 
 // Debug mode
 
-function log(...args: any[]) {
+function log(...args: any[]): void {
   if (DEBUG) {
     console.log(...args);
   }
@@ -23,7 +23,7 @@ function registerRenderers(
   render: _DebugFunction,
   unrender: _DebugFunction,
   _asyncRender: _AsyncDebugFunction
-) {
+): void {
   Object.defineProperty(window, "start", { get: render });
   Object.defineProperty(window, "stop", { get: unrender });
   Object.defineProperty(window, "reload", {
