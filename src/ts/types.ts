@@ -18,6 +18,7 @@ type PlayerPos<PosType> = {
   shiftY: (dy: number) => void;
 };
 type ImagePos = [number, number, number, number];
+type ImageFactory = (size: number) => HTMLImageElement;
 export type {
   Arrows,
   TilePos,
@@ -27,4 +28,5 @@ export type {
   MapType,
   PlayerPos,
   ImagePos,
+  ImageFactory,
 };

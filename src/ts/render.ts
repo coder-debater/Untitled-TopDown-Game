@@ -2,16 +2,17 @@ import { IMAGE_TYPE, stopTime, DEBUG } from "./config.js";
 import { canvas, c } from "./initData.js";
 import { log, s, registerRenderers } from "./debug.js";
 import { getLand, player } from "./movePlayer.js";
-import { ImagePos } from "./types.js";
+import { ImagePos, ImageFactory } from "./types.js";
 log("render.js start");
 
 // Tiles
 
 const CANVAS_MIN_DIM: number = Math.min(canvas.width, canvas.height);
 // Size of one tile
-const getTileSize: (maxTileDim: number) => number = (maxTileDim: number) =>
-  CANVAS_MIN_DIM / maxTileDim;
-function img(name: string): (size: number) => HTMLImageElement {
+function getTileSize(maxTileDim: number): number {
+  return CANVAS_MIN_DIM / maxTileDim;
+}
+function img(name: string): ImageFactory {
   return function (size: number): HTMLImageElement {
     // Get image
     const imgMaybe: HTMLImageElement | null = document.querySelector(
@@ -30,9 +31,9 @@ function img(name: string): (size: number) => HTMLImageElement {
     return img;
   };
 }
-const player_image: (size: number) => HTMLImageElement = img("player");
+const player_image: ImageFactory = img("player");
 const tile_images: {
-  [key: string]: (size: number) => HTMLImageElement;
+  [key: string]: ImageFactory;
 } = {
   " ": img("grass"),
   "-": img("path"),
@@ -49,16 +50,15 @@ function toTilePos(startX: number, startY: number, size: number): ImagePos {
 // Render
 
 function _render(): string | undefined {
-  let currentTiles: string[] = getLand(player.land.truePos).tiles;
-  // Get tiles height
+  const currentTiles: string[] = getLand(player.land.truePos).tiles;
   const size = getTileSize(
     Math.max(currentTiles.length, ...currentTiles.map((row) => row.length))
   );
   for (let y: number = 0; y < currentTiles.length; y++) {
-    let row: string = currentTiles[y];
+    const row: string = currentTiles[y];
     for (let x: number = 0; x < row.length; x++) {
       const tilePosition: ImagePos = toTilePos(x, y, size);
-      let tileTextContent: string = row[x];
+      const tileTextContent: string = row[x];
       c.clearRect(...tilePosition);
       if (TILE_TYPES.includes(tileTextContent)) {
         c.drawImage(tile_images[tileTextContent](size), ...tilePosition);
