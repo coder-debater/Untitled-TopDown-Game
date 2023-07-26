@@ -1,6 +1,6 @@
 import { IMAGE_TYPE, stopTime, DEBUG } from "./config.js";
 import { canvas, c } from "./initData.js";
-import { log, s, registerRenderers } from "./debug.js";
+import { log, s } from "./debug.js";
 import { getLand, player } from "./movePlayer.js";
 import { ImagePos, ImageFactory } from "./types.js";
 log("render.js start");
