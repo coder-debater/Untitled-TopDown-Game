@@ -146,6 +146,8 @@ function unrender() {
     }
 });
 */
+
+render();
 if (DEBUG) {
   Object.defineProperty(window, "start", { get: render });
   Object.defineProperty(window, "stop", { get: unrender });
@@ -155,7 +157,6 @@ if (DEBUG) {
       return s`Now reloading`;
     },
   });
-  render();
 }
 
 log("render.js end");
