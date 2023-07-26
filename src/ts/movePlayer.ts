@@ -149,11 +149,11 @@ let canMove: {
 const baseMoveInterval: number = 30;
 async function moved(key: Arrows) {
   canMove[key] = false;
-  setTimeout(function () {
+  setTimeout(() => {
     canMove[key] = true;
   }, baseMoveInterval);
 }
-document.body.addEventListener("keydown", function (evt) {
+document.body.addEventListener("keydown", (evt) => {
   const key = evt.key;
   switch (key) {
     case "ArrowRight":

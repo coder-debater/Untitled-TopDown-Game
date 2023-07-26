@@ -13,7 +13,7 @@ function getTileSize(maxTileDim: number): number {
   return CANVAS_MIN_DIM / maxTileDim;
 }
 function img(name: string): ImageFactory {
-  return function (size: number): HTMLImageElement {
+  return (size: number): HTMLImageElement => {
     // Get image
     const imgMaybe: HTMLImageElement | null = document.querySelector(
       "#" + name + IMAGE_TYPE
@@ -81,7 +81,7 @@ let rendering: boolean = false;
 if (stopTime > 0) {
   let start: number | null = null;
   let prevTimestamp: number | null = null;
-  renderCallback = function (_timestamp: number) {
+  renderCallback = (_timestamp: number) => {
     if (start === null) {
       start = _timestamp;
     }
@@ -104,7 +104,7 @@ if (stopTime > 0) {
     }
   };
 } else {
-  renderCallback = function (_timestamp: number) {
+  renderCallback = (_timestamp: number) => {
     if (rendering) {
       _render();
       window.requestAnimationFrame(renderCallback);
