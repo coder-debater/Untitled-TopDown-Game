@@ -147,10 +147,15 @@ function unrender() {
 });
 */
 if (DEBUG) {
-  registerRenderers(render, unrender, _asyncRender);
-  (window as any).start; // defined in debug.ts registerRenderers()
-  // use "as any" to silence errors
-  // TODO: silence errors properly
+  Object.defineProperty(window, "start", { get: render });
+  Object.defineProperty(window, "stop", { get: unrender });
+  Object.defineProperty(window, "reload", {
+    get() {
+      _asyncRender();
+      return s`Now reloading`;
+    },
+  });
+  render();
 }
 
 log("render.js end");
