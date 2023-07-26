@@ -15,14 +15,13 @@ function getTileSize(maxTileDim: number): number {
 function img(name: string): ImageFactory {
   return (size: number): HTMLImageElement => {
     // Get image
-    const imgMaybe: HTMLImageElement | null = document.querySelector(
+    const img: HTMLImageElement | null = document.querySelector(
       "#" + name + IMAGE_TYPE
     );
     // Ensure it exists
-    if (!imgMaybe) {
+    if (!img) {
       throw new Error(`Image ${name} not found`);
     }
-    const img: HTMLImageElement = imgMaybe as HTMLImageElement;
 
     // Set dimensions
     img.width = size;
