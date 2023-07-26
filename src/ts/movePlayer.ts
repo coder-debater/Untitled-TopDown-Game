@@ -54,10 +54,10 @@ const player: PlayerType = {
     set pos(newPos: TilePos) {
       playerTilePos = newPos;
     },
-    shiftX: function (dx: number) {
+    shiftX(dx: number) {
       playerTilePos.x += dx;
     },
-    shiftY: function (dy: number) {
+    shiftY(dy: number) {
       playerTilePos.y += dy;
     },
   },
@@ -96,10 +96,10 @@ const player: PlayerType = {
     set pos(newPos: LandPos) {
       playerLandPos = newPos;
     },
-    shiftX: function (dx: number) {
+    shiftX(dx: number) {
       playerLandPos.x += dx;
     },
-    shiftY: function (dy: number) {
+    shiftY(dy: number) {
       playerLandPos.y += dy;
     },
   },
@@ -116,7 +116,7 @@ function getLand(landPos: LandPos): TileData {
 // Access player debug mode
 if (DEBUG) {
   Object.defineProperty(window, "player", {
-    get: function () {
+    get() {
       return player;
     },
   });
