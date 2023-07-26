@@ -1,7 +1,14 @@
 import { DEBUG } from "./config.js";
 import { log } from "./debug.js";
 import { map } from "./initData.js";
-import { Arrows, TilePos, LandPos, Pos, TileData, PlayerPos } from "./types.js";
+import {
+  Arrows,
+  TilePos,
+  LandPos,
+  Pos,
+  TileData,
+  PlayerType,
+} from "./types.js";
 log("movePlayer.js start");
 
 // Player
@@ -11,10 +18,7 @@ let playerTilePos: TilePos = { x: 0, y: 14 };
 // Which land are we in?
 let playerLandPos: LandPos = { x: 0, y: 0 };
 // Player data interface
-const player: {
-  tile: PlayerPos<TilePos>;
-  land: PlayerPos<LandPos>;
-} = {
+const player: PlayerType = {
   tile: {
     get x() {
       return playerTilePos.x;

@@ -17,6 +17,10 @@ type PlayerPos<PosType> = {
   shiftX: (dx: number) => void;
   shiftY: (dy: number) => void;
 };
+type PlayerType = {
+  tile: PlayerPos<TilePos>;
+  land: PlayerPos<LandPos>;
+};
 type ImagePos = [number, number, number, number];
 type ImageFactory = (size: number) => HTMLImageElement;
 export type {
@@ -26,7 +30,7 @@ export type {
   Pos,
   TileData,
   MapType,
-  PlayerPos,
+  PlayerType,
   ImagePos,
   ImageFactory,
 };
